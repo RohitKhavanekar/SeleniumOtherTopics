@@ -1,0 +1,42 @@
+package qaclickacademy;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentReporter;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class ExtentDemo 
+{
+	ExtentReports extent;//Declare "ExtentReports extent" Globally so it can e be accessed outside also 
+
+@BeforeTest	
+public void config() //***************************EXTENT REPORT CONFIGURAATION*****************************************
+{
+	String path = System.getProperty("user.dir")+"\\reports\\index.html"; //location of the project to create report
+	ExtentSparkReporter reporter = new ExtentSparkReporter(path);//EXTENTSPARTREPORTER object creation
+	reporter.config().setReportName("Web Automation Results");////set report name
+	reporter.config().setDocumentTitle("Test Result");//set document titel
+	
+	extent = new ExtentReports(); //Create ExtentReport object
+	extent.attachReporter(reporter);//Attach report to this 
+	extent.setSystemInfo("Tester", "Rohit");//Set Name & Value to hte report
+	
+	
+}
+
+
+@Test
+public void initialDemo()
+{
+	extent.createTest("Inital Demo");//Start Monitering for Report 
+	System.setProperty("webdriver.chrome.driver","D:\\Rohit_Folder\\MAXIMUS\\Selenium Driver NEVER DELETE\\chromedriver.exe");
+	WebDriver driver = new ChromeDriver();
+	driver.get("https://www.google.co.in/?gfe_rd=cr&ei=wnuwV-O5MKXT8gebroGIAQ");
+	System.out.println(driver.getTitle());
+	extent.flush();//Stop Monitering FOr report
+}
+}
